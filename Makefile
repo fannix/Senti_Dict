@@ -16,3 +16,7 @@ stat: 0preprocess 1direct_translation
 	wc -l 1direct_translation/positive.txt 1direct_translation/negative.txt
 	sort 1direct_translation/positive.txt |uniq | wc -l
 	sort 1direct_translation/negative.txt |uniq | wc -l
+	wc -l 1direct_translation/single_positive.txt
+	wc -l 1direct_translation/single_negative.txt
+	sort 1direct_translation/multi_positive.txt |uniq | wc -l
+	sort 1direct_translation/multi_negative.txt |uniq | wc -l
