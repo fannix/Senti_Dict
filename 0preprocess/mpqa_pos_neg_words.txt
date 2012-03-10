@@ -577,8 +577,6 @@ bothersome	negative
 boundless	positive
 bountiful	positive
 bowdlerize	negative
-brag	both
-brag	both
 braggart	negative
 braggart	negative
 bragger	negative
@@ -902,12 +900,8 @@ court	positive
 courteous	positive
 courtesy	positive
 courtly	positive
-covet	both
-coveting	both
-covetingly	both
 covetous	negative
 covetous	negative
-covetously	both
 coward	negative
 cowardly	negative
 cozy	positive
@@ -1091,7 +1085,6 @@ delusional	negative
 delusional	negative
 delusions	negative
 delusions	negative
-demand	both
 demean	negative
 demeaning	negative
 demise	negative
@@ -1853,7 +1846,6 @@ favor	positive
 favorable	positive
 favorable	positive
 favorite	positive
-fawn	both
 fawningly	negative
 favour	positive
 fear	negative
@@ -2106,7 +2098,6 @@ glisten	positive
 glistening	positive
 glitter	positive
 glitter	positive
-gloat	both
 gloatingly	negative
 gloom	negative
 gloomy	negative
@@ -2514,9 +2505,6 @@ implacable	negative
 implausible	negative
 implausibly	negative
 implode	negative
-implore	both
-imploring	both
-imploringly	both
 impolite	negative
 impolitely	negative
 impolitic	negative
@@ -2703,7 +2691,6 @@ infallibility	positive
 infamous	negative
 infamously	negative
 infamy	negative
-infatuated	both
 inferior	negative
 inferiority	negative
 infernal	negative
@@ -3108,7 +3095,6 @@ lurid	negative
 lurk	negative
 lurking	negative
 lush	positive
-lust	both
 lure	negative
 luster	positive
 lustrous	positive
@@ -3737,9 +3723,6 @@ playful	positive
 playfully	positive
 plaything	negative
 plaything	negative
-plead	both
-pleading	both
-pleadingly	both
 pleas	negative
 pleas	negative
 please	positive
@@ -5197,8 +5180,8 @@ vouch	positive
 vouchsafe	positive
 vow	positive
 vulgar	negative
-vulnerable	positive
-vulnerable	positive
+vulnerable	negative
+vulnerable	negative
 wail	negative
 waning	negative
 waning	negative

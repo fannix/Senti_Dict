@@ -8002,8 +8002,8 @@ type=strongsubj len=1 word1=vouch pos1=verb stemmed1=y priorpolarity=positive
 type=strongsubj len=1 word1=vouchsafe pos1=verb stemmed1=y priorpolarity=positive
 type=strongsubj len=1 word1=vow pos1=verb stemmed1=y priorpolarity=positive
 type=strongsubj len=1 word1=vulgar pos1=adj stemmed1=n priorpolarity=negative
-type=strongsubj len=1 word1=vulnerable pos1=adj stemmed1=n priorpolarity=positive
-type=strongsubj len=1 word1=vulnerable pos1=noun stemmed1=n priorpolarity=positive
+type=strongsubj len=1 word1=vulnerable pos1=adj stemmed1=n priorpolarity=negative
+type=strongsubj len=1 word1=vulnerable pos1=noun stemmed1=n priorpolarity=negative
 type=strongsubj len=1 word1=wail pos1=verb stemmed1=y priorpolarity=negative
 type=weaksubj len=1 word1=wallow pos1=verb stemmed1=y priorpolarity=negative
 type=weaksubj len=1 word1=wane pos1=verb stemmed1=y priorpolarity=negative
