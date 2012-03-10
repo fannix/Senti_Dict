@@ -12,5 +12,5 @@ for aline in lines:
     record_type, record_len, word, pos, stemmed, polarity = \
             [e.split("=")[1] for e in arecord]
 
-    if record_type == "strongsubj" and polarity != "neutral":
+    if record_type == "strongsubj" and (polarity == "positive" or polarity == "negative"):
         print word + "\t" + polarity
