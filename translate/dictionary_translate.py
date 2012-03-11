@@ -32,7 +32,7 @@ def load_dict():
 
     return single_dict, multiple_dict
 
-def translate(single_dict, word_list, multiple_translation):
+def translate(single_dict, word_list, multiple_translation, stem):
     """
     Translate translation mapping dictinary
 
@@ -41,6 +41,7 @@ def translate(single_dict, word_list, multiple_translation):
     single_dict: mapping dictionary
     word_list: English polarity lexicon
     multiple_translation: Allow a word to translate to multiple words
+    stem: True means using stemming
 
     Returns
     -------
@@ -55,7 +56,7 @@ def translate(single_dict, word_list, multiple_translation):
                 translation_li.extend(translation[1:-1].split('/'))
             else:
                 translation_li.append(translation)
-        elif stemmed in single_dict:
+        elif stemmed in single_dict and stem:
             stem_translation = single_dict[stemmed]
             if multiple_translation:
                 translation_li.extend(stem_translation[1:-1].split('/'))
@@ -72,17 +73,24 @@ if __name__ == "__main__":
     pos_li = [e.strip() for e in open(pos_file_name).readlines()]
     neg_li = [e.strip() for e in open(neg_file_name).readlines()]
 
+    pos_non_stem_name = "1direct_translation/non_stem_positive.txt"
+    neg_non_stem_name = "1direct_translation/non_stem_negative.txt"
+    pos_non_stem_li = translate(single_dict, pos_li, False, False)
+    neg_non_stem_li = translate(single_dict, neg_li, False, False)
+    open(pos_non_stem_name, 'w').write("\n".join(pos_non_stem_li))
+    open(neg_non_stem_name, 'w').write("\n".join(neg_non_stem_li))
+
     pos_single_name = "1direct_translation/single_positive.txt"
     neg_single_name = "1direct_translation/single_negative.txt"
-    pos_single_li = translate(single_dict, pos_li, False)
-    neg_single_li = translate(single_dict, neg_li, False)
+    pos_single_li = translate(single_dict, pos_li, False, True)
+    neg_single_li = translate(single_dict, neg_li, False, True)
     open(pos_single_name, 'w').write("\n".join(pos_single_li))
     open(neg_single_name, 'w').write("\n".join(neg_single_li))
 
     pos_multiple_name = "1direct_translation/multi_positive.txt"
     neg_multiple_name = "1direct_translation/multi_negative.txt"
-    pos_multiple_li = translate(multiple_dict, pos_li, True)
-    neg_multiple_li = translate(multiple_dict, neg_li, True)
+    pos_multiple_li = translate(multiple_dict, pos_li, True, True)
+    neg_multiple_li = translate(multiple_dict, neg_li, True, True)
     open(pos_multiple_name, 'w').write("\n".join(pos_multiple_li))
     open(neg_multiple_name, 'w').write("\n".join(neg_multiple_li))
 
