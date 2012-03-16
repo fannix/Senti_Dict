@@ -32,6 +32,17 @@ def load_dict():
 
     return single_dict, multiple_dict
 
+def extend(translation_li, new_translations):
+    #We do some filtering here since
+    #not all translations are useful
+    translation_candidates = [e.decode("utf-8") for e in new_translations]
+    legal_translations = [e.encode('utf-8') for e in translation_candidates\
+            if (e.find(u'.') == -1
+                and len(e) > 1
+                and len(e) < 6)]
+    translation_li.extend(legal_translations)
+
+
 def translate(single_dict, word_list, multiple_translation, stem):
     """
     Translate translation mapping dictinary
@@ -53,15 +64,15 @@ def translate(single_dict, word_list, multiple_translation, stem):
         if e in single_dict:
             translation = single_dict[e]
             if multiple_translation:
-                translation_li.extend(translation[1:-1].split('/'))
+                extend(translation_li, translation[1:-1].split('/'))
             else:
-                translation_li.append(translation)
+                extend(translation_li, [translation])
         elif stemmed in single_dict and stem:
             stem_translation = single_dict[stemmed]
             if multiple_translation:
-                translation_li.extend(stem_translation[1:-1].split('/'))
+                extend(translation_li, stem_translation[1:-1].split('/'))
             else:
-                translation_li.append(stem_translation)
+                extend(translation_li, [stem_translation])
         else:
             print e
     return translation_li
