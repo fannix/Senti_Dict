@@ -4,6 +4,7 @@ Translate sentiment lexicon using selenium
 from selenium import webdriver
 from selenium.webdriver.common import keys
 import sys
+import time
 
 
 def translate():
@@ -17,8 +18,10 @@ def translate():
     #driver.find_element_by_id("source").send_keys("".join(words)) #don't do that, too slow
     driver.find_element_by_id("source").send_keys(keys.Keys.COMMAND + "v")
     #driver.find_element_by_id("gt-submit").click()
-    while len(driver.find_element_by_id("result_box").text) < 3:
-        pass
+    i = 0
+    while i < 10 and len(driver.find_element_by_id("result_box").text) < 3:
+        time.sleep(1)
+        i += 1
     print driver.find_element_by_id("result_box").text.encode("utf-8")
     driver.quit()
 
