@@ -13,24 +13,30 @@ direct_translate: 0preprocess
 
 dictionary_translate: 0preprocess
 	python translate/dictionary_translate.py
+	sort 1direct_translation/multi_positive.txt |uniq  > 1direct_translation/temp
+	mv 1direct_translation/temp 1direct_translation/multi_positive.txt
+	sort 1direct_translation/multi_negative.txt |uniq  > 1direct_translation/temp2
+	mv 1direct_translation/temp2 1direct_translation/multi_negative.txt
 
 stat: 0preprocess 1direct_translation
-	wc -l 0preprocess/positive.txt 0preprocess/negative.txt 
-	wc -l 1direct_translation/positive.txt 1direct_translation/negative.txt
-	sort 1direct_translation/positive.txt |uniq | wc -l
-	sort 1direct_translation/negative.txt |uniq | wc -l
-	sort 1direct_translation/non_stem_positive.txt |uniq | wc -l
-	sort 1direct_translation/non_stem_negative.txt |uniq | wc -l
-	wc -l 1direct_translation/single_positive.txt
-	wc -l 1direct_translation/single_negative.txt
-	sort 1direct_translation/single_positive.txt |uniq | wc -l
-	sort 1direct_translation/single_negative.txt |uniq | wc -l
-	sort 1direct_translation/multi_positive.txt |uniq | wc -l
-	sort 1direct_translation/multi_negative.txt |uniq | wc -l
+	#wc -l 0preprocess/positive.txt 0preprocess/negative.txt 
+	#wc -l 1direct_translation/positive.txt 1direct_translation/negative.txt
+	#sort 1direct_translation/positive.txt |uniq | wc -l
+	#sort 1direct_translation/negative.txt |uniq | wc -l
+	#sort 1direct_translation/non_stem_positive.txt |uniq | wc -l
+	#sort 1direct_translation/non_stem_negative.txt |uniq | wc -l
+	#wc -l 1direct_translation/single_positive.txt
+	#wc -l 1direct_translation/single_negative.txt
+	#sort 1direct_translation/single_positive.txt |uniq | wc -l
+	#sort 1direct_translation/single_negative.txt |uniq | wc -l
+	#sort 1direct_translation/multi_positive.txt |uniq | wc -l
+	#sort 1direct_translation/multi_negative.txt |uniq | wc -l
 	#cut -f1 bilingual_dictionary/ldc_ec_dict.1.0.utf8.txt 0preprocess/negative.txt | sort | uniq -d | wc -l
 	#cut -f1 bilingual_dictionary/ldc_ec_dict.1.0.utf8.txt 0preprocess/positive.txt | sort | uniq -d | wc -l
-	sort 7extraction/positive/*.txt | uniq | wc -l
-	sort 7extraction/negative/*.txt | uniq | wc -l
+	sort 7extraction/positive.txt | uniq | wc -l
+	sort 7extraction/negative.txt | uniq | wc -l
+	grep y$$ 8annotation/multi_positive.txt | wc -l
+	grep y$$ 8annotation/multi_negative.txt | wc -l
 
 bigrams: 0preprocess
 	mkdir -p 2bigrams/positive
@@ -38,6 +44,7 @@ bigrams: 0preprocess
 
 goole_translate: 0preprocess
 	for x in 2bigrams/positive/*.txt; do pbcopy < $x; python translate/google_translate_webdriver.py > 3google_translation/positive/$(basename $x); done
+	for x in complement//positive/*.txt; do pbcopy < $x; python translate/google_translate_webdriver.py > 3google_translation/positive/$(basename $x); done
 
 punctuation: 0preprocess
 	mkdir 5punctuation
@@ -55,7 +62,13 @@ coordinate: 0preprocess
 	python coordinate_phrase/gen_coordiate_phrase.py < 6coordinate_phrase/negative_join.txt > 6coordinate_phrase/negative_coordinate_phrase.txt
 
 extract: 0preprocess
-	python extract/extract_from_direct_translation.py< 1direct_translation/positive.txt > 7extraction/positive/direct.txt
-	python extract/extract_from_direct_translation.py< 1direct_translation/negative.txt > 7extraction/negative/direct.txt
-	python extract/extract_from_punctuations.py< 5punctuation/positive_translation.txt > 7extraction/positive/punctuation.txt
-	python extract/extract_from_punctuations.py< 5punctuation/negative_translation.txt > 7extraction/negative/punctuation.txt
+	#python extract/extract_from_direct_translation.py< 1direct_translation/positive.txt > 7extraction/positive/direct.txt
+	#python extract/extract_from_direct_translation.py< 1direct_translation/negative.txt > 7extraction/negative/direct.txt
+	#python extract/extract_from_punctuations.py< 5punctuation/positive_translation.txt > 7extraction/positive/punctuation.txt
+	#python extract/extract_from_punctuations.py< 5punctuation/negative_translation.txt > 7extraction/negative/punctuation.txt
+	#cat 4segmentation/positive/*.txt | python extract/extract_from_collocations.py |sort |uniq -c> 7extraction/positive/collocation.txt
+	for f in 4segmentation/negative/aw*.txt; do cat $$f | python extract/extract_from_collocations.py > 7extraction/negative/collocation/$$(basename $$f); done;
+
+sample: 7extraction 8annotation
+	cat 7extraction/positive.txt | awk 'BEGIN { srand() } { print rand() "\t" $$0 }' | sort -n | cut -f2- | head -200 > 8annotation/context_positive.txt
+	cat 7extraction/negative.txt | awk 'BEGIN { srand() } { print rand() "\t" $$0 }' | sort -n | cut -f2- | head -200 > 8annotation/context_negative.txt

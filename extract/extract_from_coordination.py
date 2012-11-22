@@ -13,21 +13,21 @@ def output(word):
     for e in word:
         if e in string.ascii_letters:
             return
-    if len(word) < 2:
+    if len(word) < 2 or len(word) > 6:
         return
 
     print word.encode("utf-8")
-
-
 
 def extract(phrase):
     words = phrase.split()
     #4 characters idioms
     if len(words) ==1 and len(phrase) == 4:
         output(phrase)
-    if len(words) == 3 and (words[1] == u'，' or words[1] == u'和'):
-        output(words[0])
-        output(words[2])
+    #if len(words) == 3 and (words[1] == u'，' or words[1] == u'和'):
+    for i, e in enumerate(words):
+        if e == u'，' or e == u'和':
+            output("".join(words[:i]))
+            output("".join(words[i+1:]))
 
 if __name__ == "__main__":
     seg_file = sys.argv[1]
@@ -38,4 +38,3 @@ if __name__ == "__main__":
 
     for phrase in seg_phrase_li:
         extract(phrase)
-
